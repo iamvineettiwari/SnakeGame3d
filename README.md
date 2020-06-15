@@ -1,5 +1,5 @@
 # SnakeGame3d
-3D Snaked game develeped using THREE.js
+3D Snake game develeped using THREE.js
 
 # Instructions to play
 

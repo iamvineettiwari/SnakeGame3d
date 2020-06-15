@@ -3,7 +3,7 @@
 
 # Instructions to play
 
-**To start the game press either of the key mentioned below**
+**To start the game press either of the key mentioned below : **
 
 * **Key Up** - Move in Y positive direction
 * **Key Down** - Move in Y negative direction

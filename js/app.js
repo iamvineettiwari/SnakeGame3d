@@ -109,7 +109,7 @@ const log = () => {
 }
 
 const runSnake = () => {
-    if (((snakeBody[0].position.x > 1.25 || snakeBody[0].position.x < 1.25) && (snakeBody[0].position.y > 1.25 || snakeBody[0].position.y < 1.25) && (snakeBody[0].position.z > 1.25 || snakeBody[0].position.z < 1.25)) &&  checkEnd()) {
+    if (checkEnd()) {
         alert(`Game Over ! Your score is ${(snakeBody.length - 1) * 5}`)
         restart()
         return
@@ -218,7 +218,7 @@ const checkEnd = () => {
         const x = snakeBody[0].position.x - snakeBody[i].position.x
         const y = snakeBody[0].position.y - snakeBody[i].position.y
         const z = snakeBody[0].position.z - snakeBody[i].position.z
-        end = (Math.sqrt(x * x + y * y + z * z)) < 1
+        end = (Math.sqrt(x * x + y * y + z * z)) < 0.6
         if (end) {
             break
         }

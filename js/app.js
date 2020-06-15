@@ -143,28 +143,28 @@ const handleKeys = (event) => {
     lastDir = new THREE.Vector3(currentDir.x, currentDir.y, currentDir.z)
 }
 
-const move = (elem) => {
-    if (elem.position.z < -9) {
-        elem.position.z = 9
-    } else if (elem.position.z > 9) {
-        elem.position.z = -9
+const move = (head) => {
+    if (head.position.z < -9) {
+        head.position.z = 9
+    } else if (head.position.z > 9) {
+        head.position.z = -9
     }
 
-    if (elem.position.x < -9.5) {
-        elem.position.x = 9
-    } else if (elem.position.x > 9.5) {
-        elem.position.x = -9.5
+    if (head.position.x < -9.5) {
+        head.position.x = 9
+    } else if (head.position.x > 9.5) {
+        head.position.x = -9.5
     }
 
-    if (elem.position.y < -9.5) {
-        elem.position.y = 9.5
-    } else if (elem.position.y > 9.5) {
-        elem.position.y = -9.5
+    if (head.position.y < -9.5) {
+        head.position.y = 9.5
+    } else if (head.position.y > 9.5) {
+        head.position.y = -9.5
     }
 
-    snakeBody[0].position.x += (currentDir.x * 1)
-    snakeBody[0].position.y += (currentDir.y * 1)
-    snakeBody[0].position.z += (currentDir.z * 1)
+    head.position.x += (currentDir.x * 1)
+    head.position.y += (currentDir.y * 1)
+    head.position.z += (currentDir.z * 1)
 }
 
 const setFoodPosition = () => {

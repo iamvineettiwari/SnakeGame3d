@@ -9,3 +9,7 @@
 * **KeyRight** - Move in X positive direction
 * **Key W** - Move in Z positive direction
 * **Key S** - Move in Z negative direction
+
+---
+permalink: /index.html
+---

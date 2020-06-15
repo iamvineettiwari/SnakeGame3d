@@ -1,11 +1,14 @@
 let width = window.innerWidth
 let height = window.innerHeight
 
-let score = document.getElementById('score')
+let lastRange = 1
 
-let snakeSpeed = 0.250
-let increaseSpeed = 0.001
-let maxSpeed = 0.025
+let score = document.getElementById('score')
+let speedSlider = document.getElementById('speed_slider')
+let speedDisplay = document.getElementById('speed_display')
+
+let snakeSpeed = 0.089
+let increaseSpeed = 0.010
 
 let snakeBody = [], snakeLength = 0
 let currentDir = new THREE.Vector3(0, 0, 0)
@@ -41,10 +44,24 @@ let outerScene = new THREE.LineSegments(edges, outerBoxMaterial)
 parentContainer.add(outerScene)
 
 
-let snakeFood = new THREE.BoxGeometry(1, 1, 1)
-let snakeFoodMaterial = new THREE.MeshLambertMaterial({ color: 0xffbe87 })
+let snakeFood = new THREE.SphereGeometry(0.5, 0, 0)
+let snakeFoodMaterial = new THREE.MeshLambertMaterial({ color: 0xff4b22 })
 let food = new THREE.Mesh(snakeFood, snakeFoodMaterial)
 parentContainer.add(food)
+
+let leftBlackHoleBody = new THREE.BoxGeometry(1,1,1)
+let leftBlackHoleMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 })
+let leftBlackHole = new THREE.Mesh(leftBlackHoleBody, leftBlackHoleMaterial)
+
+leftBlackHole.position.set(0.25,0.25,0.25)
+parentContainer.add(leftBlackHole)
+
+let rightBlackHoleBody = new THREE.BoxGeometry(1,1,1)
+let rightBlackHoleMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 })
+let rightBlackHole = new THREE.Mesh(rightBlackHoleBody, rightBlackHoleMaterial)
+
+rightBlackHole.position.set(0.75,0.75,0.75)
+parentContainer.add(rightBlackHole)
 
 parentContainer.rotateOnAxis(new THREE.Vector3(1, 0, 0), 0.5)
 
@@ -76,6 +93,10 @@ const createSnakeBody = () => {
         snake.position.y = snakeBody[snakeBody.length - 1].position.y + (1 * currentDir.y)
         snake.position.x = snakeBody[snakeBody.length - 1].position.x + (1 * currentDir.x)
         snake.position.z = snakeBody[snakeBody.length - 1].position.z + (1 * currentDir.z)
+    } else {
+        snake.position.x = 2
+        snake.position.y = 2
+        snake.position.z = 2
     }
     snakeBody.push(snake)
     snakeLength += 1
@@ -97,10 +118,6 @@ const runSnake = () => {
         setFoodPosition()
         createSnakeBody()
         score.innerHTML = (snakeBody.length - 1) * 5
-        
-        snakeSpeed -= increaseSpeed
-
-        if (snakeSpeed < maxSpeed) snakeSpeed = maxSpeed        
     }
 
     for (let i = snakeBody.length - 2; i >= 0; i--) {
@@ -144,6 +161,22 @@ const handleKeys = (event) => {
 }
 
 const move = (head) => {
+    const headX = head.position.x
+    const headY = head.position.y
+    const headZ = head.position.z
+
+    if (checkPointDistance(headX, headY, headZ, new THREE.Vector3(0.25,0.25,0.25)) < 0.75) {
+        head.position.x = 0.75
+        head.position.y = 0.75
+        head.position.z = 0.75
+    }
+
+    if (checkPointDistance(headX, headY, headZ, new THREE.Vector3(0.75,0.75,0.75)) < 0.75) {
+        head.position.x = 0.25
+        head.position.y = 0.25
+        head.position.z = 0.25
+    }
+
     if (head.position.z < -9) {
         head.position.z = 9
     } else if (head.position.z > 9) {
@@ -193,6 +226,13 @@ const checkEnd = () => {
     return end
 }
 
+const checkPointDistance = (x,y,z, vec) => {
+    const x1 = x - vec.x
+    const y1 = y - vec.y
+    const z1 = z - vec.z
+    return (Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1))
+}
+
 const checkMatch = () => {
     const x = snakeBody[0].position.x - food.position.x
     const y = snakeBody[0].position.y - food.position.y
@@ -211,5 +251,17 @@ const onResize = () => {
 createSnakeBody()
 setFoodPosition()
 display()
+speedSlider.value = 1;
+speedSlider.addEventListener('change', (event) => {
+    let currentRangeValue = event.target.value
+    speedDisplay.innerHTML = currentRangeValue
+    if (lastRange < currentRangeValue) {
+        snakeSpeed = ((1.000 - (currentRangeValue*increaseSpeed)) * 0.1) - 0.01
+    } else {
+        snakeSpeed = ((1.000 - (currentRangeValue*increaseSpeed)) * 0.1) - - 0.01
+    }
+    lastRange = currentRangeValue
+    console.log(lastRange, snakeSpeed)
+})
 document.body.addEventListener('keyup', handleKeys)
 window.addEventListener('resize', onResize)

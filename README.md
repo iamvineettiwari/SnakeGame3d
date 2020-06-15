@@ -8,7 +8,7 @@
 * **Key Up** - Move in Y positive direction
 * **Key Down** - Move in Y negative direction
 * **Key Left** - Move in X negative direction
-* **KeyRight** - Move in X positive direction
+* **Key Right** - Move in X positive direction
 * **Key W** - Move in Z positive direction
 * **Key S** - Move in Z negative direction
 

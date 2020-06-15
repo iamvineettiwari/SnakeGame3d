@@ -49,18 +49,18 @@ let snakeFoodMaterial = new THREE.MeshLambertMaterial({ color: 0xff4b22 })
 let food = new THREE.Mesh(snakeFood, snakeFoodMaterial)
 parentContainer.add(food)
 
-let leftBlackHoleBody = new THREE.BoxGeometry(1, 1, 1)
+let leftBlackHoleBody = new THREE.BoxGeometry(1,1,1)
 let leftBlackHoleMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 })
 let leftBlackHole = new THREE.Mesh(leftBlackHoleBody, leftBlackHoleMaterial)
 
-leftBlackHole.position.set(0.25, 0.25, 0.25)
+leftBlackHole.position.set(0.25,0.25,0.25)
 parentContainer.add(leftBlackHole)
 
-let rightBlackHoleBody = new THREE.BoxGeometry(1, 1, 1)
+let rightBlackHoleBody = new THREE.BoxGeometry(1,1,1)
 let rightBlackHoleMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 })
 let rightBlackHole = new THREE.Mesh(rightBlackHoleBody, rightBlackHoleMaterial)
 
-rightBlackHole.position.set(0.75, 0.75, 0.75)
+rightBlackHole.position.set(0.75,0.75,0.75)
 parentContainer.add(rightBlackHole)
 
 parentContainer.rotateOnAxis(new THREE.Vector3(1, 0, 0), 0.5)
@@ -109,12 +109,10 @@ const log = () => {
 }
 
 const runSnake = () => {
-    if ((checkPointDistance(snakeBody[0].x, snakeBody[0].y, snakeBody[0].z, new THREE.Vector3(0.25, 0.25, 0.25)) > 0.75) || (checkPointDistance(snakeBody[0].x, snakeBody[0].y, snakeBody[0].z, new THREE.Vector3(0.75, 0.75, 0.75)) > 0.75)) {
-        if (checkEnd()) {
-            alert(`Game Over ! Your score is ${(snakeBody.length - 1) * 5}`)
-            restart()
-            return
-        }
+    if (((snakeBody[0].position.x > 1.25 || snakeBody[0].position.x < 1.25) && (snakeBody[0].position.y > 1.25 || snakeBody[0].position.y < 1.25) && (snakeBody[0].position.z > 1.25 || snakeBody[0].position.z < 1.25)) &&  checkEnd()) {
+        alert(`Game Over ! Your score is ${(snakeBody.length - 1) * 5}`)
+        restart()
+        return
     }
     if (checkMatch()) {
         setFoodPosition()
@@ -167,13 +165,13 @@ const move = (head) => {
     const headY = head.position.y
     const headZ = head.position.z
 
-    if (checkPointDistance(headX, headY, headZ, new THREE.Vector3(0.25, 0.25, 0.25)) < 0.75) {
+    if (checkPointDistance(headX, headY, headZ, new THREE.Vector3(0.25,0.25,0.25)) < 0.75) {
         head.position.x = 0.75
         head.position.y = 0.75
         head.position.z = 0.75
     }
 
-    if (checkPointDistance(headX, headY, headZ, new THREE.Vector3(0.75, 0.75, 0.75)) < 0.75) {
+    if (checkPointDistance(headX, headY, headZ, new THREE.Vector3(0.75,0.75,0.75)) < 0.75) {
         head.position.x = 0.25
         head.position.y = 0.25
         head.position.z = 0.25
@@ -228,7 +226,7 @@ const checkEnd = () => {
     return end
 }
 
-const checkPointDistance = (x, y, z, vec) => {
+const checkPointDistance = (x,y,z, vec) => {
     const x1 = x - vec.x
     const y1 = y - vec.y
     const z1 = z - vec.z
@@ -258,9 +256,9 @@ speedSlider.addEventListener('change', (event) => {
     let currentRangeValue = event.target.value
     speedDisplay.innerHTML = currentRangeValue
     if (lastRange < currentRangeValue) {
-        snakeSpeed = ((1.000 - (currentRangeValue * increaseSpeed)) * 0.1) - 0.01
+        snakeSpeed = ((1.000 - (currentRangeValue*increaseSpeed)) * 0.1) - 0.01
     } else {
-        snakeSpeed = ((1.000 - (currentRangeValue * increaseSpeed)) * 0.1) - - 0.01
+        snakeSpeed = ((1.000 - (currentRangeValue*increaseSpeed)) * 0.1) - - 0.01
     }
     lastRange = currentRangeValue
     console.log(lastRange, snakeSpeed)

@@ -218,7 +218,7 @@ const checkEnd = () => {
         const x = snakeBody[0].position.x - snakeBody[i].position.x
         const y = snakeBody[0].position.y - snakeBody[i].position.y
         const z = snakeBody[0].position.z - snakeBody[i].position.z
-        end = (Math.sqrt(x * x + y * y + z * z)) < 1
+        end = (Math.sqrt(x * x + y * y + z * z)) < 0.75
         if (end) {
             break
         }

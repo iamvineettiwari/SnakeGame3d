@@ -205,7 +205,7 @@ const setFoodPosition = () => {
     const y = Math.floor(Math.random() * 19) - 9;
     const z = Math.floor(Math.random() * 19) - 9.5;
 
-    if (checkMatch() || checkPointDistance(x,y,z, new THREE.Vector3(0.25, 0.25, 0.25)) < 0.75 || checkPointDistance(x,y,z, new THREE.Vector3(0.75, 0.75, 0.75)) < 0.75) {
+    if (x == snakeBody[0].position.x || y == snakeBody[0].position.y || z == snakeBody[0].position.z || checkPointDistance(x,y,z,new THREE.Vector3(0.25,0.25,0.25)) < 0.75 || checkPointDistance(x,y,z,new THREE.Vector3(0.75,0.75,0.75)) < 0.75) {
         setFoodPosition()
     }
 
